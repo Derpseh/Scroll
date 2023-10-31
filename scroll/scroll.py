@@ -942,7 +942,8 @@ class Scroll(commands.Cog):
 			sendString = sendString[:-3] + "\nTIME TO COMPLETION:\n"
 			for key in recDict:
 				sendString += f"{key}: {str(datetime.timedelta(seconds = len(queueDict[key][0])/(len(recDict[key])*8)*delayTime))}\n"
-		await ctx.send(f"{sendString}```")
+			sendString += "```"
+		await ctx.send(sendString)
 		
 	@commands.command()
 	async def setagent(self, ctx, *, agent: str):
