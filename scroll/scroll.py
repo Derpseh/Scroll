@@ -933,7 +933,14 @@ class Scroll(commands.Cog):
 		global inSession
 		global queueProc
 		global delayTime
-		await ctx.send(f"```\nPassive Queue Population: {str(isRunning)}\nRecruitment Session Active: {str(inSession)}\nQueue Processing ongoing: {str(queueProc)}\nCurrent batch delay: {delayTime}\n```")
+		global recDict
+		global queueDict
+		sendString = f"```\nPassive Queue Population: {str(isRunning)}\nRecruitment Session Active: {str(inSession)}\nQueue Processing ongoing: {str(queueProc)}\nCurrent batch delay: {delayTime}\n```"
+		if recDict:
+			sendString = sendString[:-3] + "\nTIME TO COMPLETION:\n"
+			for key in recDict:
+				sendString += f"{key}: {str(datetime.timedelta(seconds = len(queueDict[key][0])/(len(recDict[key])*8)*delayTime))}\n"
+		await ctx.send(f"{sendString}```")
 		
 	@commands.command()
 	async def setagent(self, ctx, *, agent: str):
