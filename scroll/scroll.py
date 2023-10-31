@@ -544,6 +544,8 @@ class Scroll(commands.Cog):
 					pass
 				try:
 					print(ctelist)
+				except:
+					pass
 				#queueDict is formatted {"region1":[[nation1, nation2, <...>],[eventid1, eventid2, <...>],[timestamp1, timestamp2, <...>],"region2":} etc
 				#this just goes through the various regional queues, checks if stuff on the "good" list is already in there, then adds them if they're not.
 				for a in list1:
