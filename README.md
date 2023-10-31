@@ -6,7 +6,7 @@
  To install:
  
 ```
-[p]repo add https://github.com/Derpseh/Scroll
+[p]repo add Scroll https://github.com/Derpseh/Scroll
 [p]cog list Scroll
 [p]cog install Scroll scroll
 [p]load scroll
