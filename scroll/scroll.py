@@ -941,7 +941,7 @@ class Scroll(commands.Cog):
 		if recDict:
 			sendString = sendString[:-3] + "\nTIME TO COMPLETION:\n"
 			for key in recDict:
-				sendString += f"{key}: {str(datetime.timedelta(seconds = len(queueDict[key][0])/(len(recDict[key])*8)*delayTime))}\n"
+				sendString += f"{key}: {str(datetime.timedelta(seconds = divmod(len(queueDict[key][0]),(len(recDict[key])*8))[0]*delayTime))}\n"
 			sendString += "```"
 		await ctx.send(sendString)
 		
