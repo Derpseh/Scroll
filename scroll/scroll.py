@@ -235,6 +235,7 @@ class Scroll(commands.Cog):
 		global queueDict
 		global current
 		global current2
+		global delayTime
 		author = ctx.author
 		lbPath = await self.CheckPath(ctx, "leaderboards.txt")
 		if headers == False:
@@ -286,7 +287,7 @@ class Scroll(commands.Cog):
 		if inSession == False:
 			#if there's no active recruiting session, we check if the previous session ended long enough ago
 			#register the stuff just above to the recruitment dictionary, and start a session
-			if ((time.time() - stopTime) < 80):
+			if ((time.time() - stopTime) < (delayTime+10)):
 				await ctx.send(f"{author.mention}:\nPrevious recruitment session halted too recently; please wait a couple seconds and try again.")
 				return
 			recDict = {tempRegion: [[str(author.id),str(author.display_name),tempString]]}
@@ -719,6 +720,8 @@ class Scroll(commands.Cog):
 		"""Displays how many recipients are waiting in the backlog for each registered region."""
 		#exactly what it says on the tin. no api interaction here
 		global queueDict
+		global delayTime
+		global recDict
 		queuePath = await self.CheckPath(ctx, "queueDict.txt")
 		if queueDict == False:
 			if queuePath[1] == False:
@@ -739,7 +742,12 @@ class Scroll(commands.Cog):
 		sendstring = "```"
 		for key in queueDict:
 			sendstring += f"\n{key}: {str(len(queueDict[key][0]))}"
-		sendstring += "\n```"
+		sendstring += "\n"
+		if recDict:
+			sendString = sendString + "\nTIME TO COMPLETION:\n"
+			for key in recDict:
+				sendString += f"{key}: {str(datetime.timedelta(seconds = divmod(len(queueDict[key][0]),(len(recDict[key])*8))[0]*delayTime))}\n"
+			sendString += "```"
 		await ctx.send(sendstring)
 	@commands.command()
 	async def template(self, ctx, *, param: str):
@@ -938,11 +946,6 @@ class Scroll(commands.Cog):
 		global recDict
 		global queueDict
 		sendString = f"```\nPassive Queue Population: {str(isRunning)}\nRecruitment Session Active: {str(inSession)}\nQueue Processing ongoing: {str(queueProc)}\nCurrent batch delay: {delayTime}\n```"
-		if recDict:
-			sendString = sendString[:-3] + "\nTIME TO COMPLETION:\n"
-			for key in recDict:
-				sendString += f"{key}: {str(datetime.timedelta(seconds = divmod(len(queueDict[key][0]),(len(recDict[key])*8))[0]*delayTime))}\n"
-			sendString += "```"
 		await ctx.send(sendString)
 		
 	@commands.command()
