@@ -739,16 +739,16 @@ class Scroll(commands.Cog):
 					queueDict = {"DEFAULT": [[],[],[]]}
 					with open(queuePath[0], 'w') as f:
 						f.write(str(queueDict))
-		sendstring = "```"
+		sendString = "```"
 		for key in queueDict:
-			sendstring += f"\n{key}: {str(len(queueDict[key][0]))}"
-		sendstring += "\n```"
+			sendString += f"\n{key}: {str(len(queueDict[key][0]))}"
+		sendString += "\n```"
 		if recDict:
 			sendString = sendString[:-3] + "\nTIME TO COMPLETION:\n"
 			for key in recDict:
 				sendString += f"{key}: {str(datetime.timedelta(seconds = divmod(len(queueDict[key][0]),(len(recDict[key])*8))[0]*delayTime))}\n"
 			sendString += "```"
-		await ctx.send(sendstring)
+		await ctx.send(sendString)
 	@commands.command()
 	async def template(self, ctx, *, param: str):
 		"""Add a template with >template add %template-id% regionlink;\nRemove a template with >template remove %template-id%;\nView a list of your templates with >template list."""
