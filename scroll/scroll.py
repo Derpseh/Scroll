@@ -742,9 +742,9 @@ class Scroll(commands.Cog):
 		sendstring = "```"
 		for key in queueDict:
 			sendstring += f"\n{key}: {str(len(queueDict[key][0]))}"
-		sendstring += "\n"
+		sendstring += "\n```"
 		if recDict:
-			sendString = sendString + "\nTIME TO COMPLETION:\n"
+			sendString = sendString[:-3] + "\nTIME TO COMPLETION:\n"
 			for key in recDict:
 				sendString += f"{key}: {str(datetime.timedelta(seconds = divmod(len(queueDict[key][0]),(len(recDict[key])*8))[0]*delayTime))}\n"
 			sendString += "```"
