@@ -130,7 +130,7 @@ class Scroll(commands.Cog):
 		regionTextlist = BeautifulSoup(req.text, "lxml-xml").find_all("TEXT")
 		regionlist = []
 		for text in regionTextlist:
-			regionlist.append(text.split(%%)[1])
+			regionlist.append(text.split("%%")[1])
 		#if at least one founding has happened in the last window ('cause otherwise we'd crash lmao)
 		if len(eventlist) > 0:
 			lastID = eventlist[0].get('id')
@@ -533,7 +533,7 @@ class Scroll(commands.Cog):
 				regionTextlist = BeautifulSoup(req.text, "lxml-xml").find_all("TEXT")
 				regionlist = []
 				for text in regionTextlist:
-					regionlist.append(text.split(%%)[1])
+					regionlist.append(text.split("%%")[1])
 				ctelist = []
 				list1 = []
 				#api batches come ordered new>old; i want old>new for this
@@ -621,7 +621,7 @@ class Scroll(commands.Cog):
 			f.write(lastID)
 		regionlist = []
 		for text in regionTextlist:
-			regionlist.append(text.split(%%)[1])
+			regionlist.append(text.split("%%")[1])
 		#no need to do any extra else-ing if the list was already <100 length
 		#reverse the list so we're reading old->new
 		eventlist.reverse()
