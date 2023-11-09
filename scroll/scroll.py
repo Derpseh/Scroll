@@ -779,7 +779,7 @@ class Scroll(commands.Cog):
 		author = ctx.author
 		if len(param) < 2:
 			await ctx.send(f"{author.mention}:\nERROR: incorrect amount of parameters provided. Too few")
-		else if len(param > 2: 
+		else if len(param) > 2: 
 			await ctx.send(f"{author.mention}:\nERROR: incorrect amount of parameters provided. Too many!")
 
 		else:
