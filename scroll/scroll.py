@@ -1083,7 +1083,7 @@ class Scroll(commands.Cog):
 		regionWhiteList = list(regions)
 		for a in range(len(regionWhiteList)):
 			regionWhiteList[a]=regionWhiteList[a].replace(" ","_")
-		await ctx.send(f"{ctx.author}: The following regions will no longer be recruited from: `{str(regionWhiteList[1:-1])}`")
+		await ctx.send(f"{ctx.author.mention}: The following regions will no longer be recruited from: `{str(regionWhiteList)[1:-1]}`")
 		print(regionWhiteList)
 ###lb format {uid: [count, displayname]}
 ###rec format {region: [[uid1, dispname, templatestring1],[uid2, tempstring2]]}
