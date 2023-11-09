@@ -47,6 +47,8 @@ global numeralmatch
 numeralmatch = re.compile(r'(?i)[-_ ](?=[MDCLXVI]+\b)(M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3}))$')
 global delayTime
 delayTime = 60
+global regionWhiteList
+
 
 class Scroll(commands.Cog):
 	"""NS Manual Recruitment Helper."""
@@ -114,6 +116,7 @@ class Scroll(commands.Cog):
 		global lastTime
 		global activeQueue
 		global current4
+		global regionWhiteList
 		#once again logging for session end/forcestop purposes
 		current4 = asyncio.current_task()
 		#grabbing every new found since the last time a similar ping was made
@@ -123,15 +126,22 @@ class Scroll(commands.Cog):
 		#pulling lists of the important stuff out
 		eventlist = BeautifulSoup(req.text, "lxml-xml").find_all("EVENT")
 		timeslist = BeautifulSoup(req.text, "lxml-xml").find_all("TIMESTAMP")
+		regionTextlist = BeautifulSoup(req.text, "lxml-xml").find_all("TEXT")
+		regionlist = []
+		for text in regionTextlist:
+			start_index = text.find(start_marker) + len(start_marker)
+			end_index = text.find(end_marker, start_index)
+			if start_index != -1 and end_index != -1:
+			    regionlist.append(text[start_index:end_index])
 		#if at least one founding has happened in the last window ('cause otherwise we'd crash lmao)
 		if len(eventlist) > 0:
 			lastID = eventlist[0].get('id')
-			for a in range(len(eventlist)):
+			for count,a in enumerate(range(len(eventlist))):
 				b = str(eventlist[a]).split("@@")[1]
 				#if there's a roman numeral at the end, or an arabic number period, we run a check for if the nation can accept recruitment TGs (with a 0.7s timer to make sure we don't run afoul of api limits)
 				#if it passes both checks, it gets yeeted onto the list of usable stuff
 				#TODO: change all the print() stuff to output to a log file or something instead lmao
-				if not(any(char.isdigit() for char in str(b))) and not(re.search(numeralmatch, b)):
+				if not(any(char.isdigit() for char in str(b))) and not(re.search(numeralmatch, b) and regionlist[count] in regionWhiteList):
 					await asyncio.sleep(0.7)
 					req2 = requests.get(f"https://www.nationstates.net/cgi-bin/api.cgi?nation={b}&q=tgcanrecruit", headers = headers)
 					if '1' in req2.text:
@@ -221,6 +231,12 @@ class Scroll(commands.Cog):
 	@commands.bot_in_a_guild()
 	async def rec(self, ctx):
 		"""Starts or stops an active recruitment session."""
+
+	@rec.command(name="regionWhiteList")
+	async def regionWhiteList(self, ctx, regions*):
+		global regionWhiteList
+		regionWhiteLis=regions.replace(" ","_")
+		
 	@rec.command(name="start")
 	async def start(self, ctx, templatenumber: str):
 		"""Registers you for the current recruitment session, and starts a session if there isn't one running."""
