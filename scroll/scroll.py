@@ -773,7 +773,7 @@ class Scroll(commands.Cog):
 	async def template(self, ctx):
 		"""Manages the templates registered to you."""
 	@template.command(name="add", usage="<%template-id%> <region_url>")
-	async def add(self, ctx, param: str):
+	async def add(self, ctx, *param: str):
 		"""Registers a template for use in recruiting."""
 		#for >template add, we check if the command's reasonably formed, then register a template to the user.
 		#we also check if there's backlog data for the region provided, and create some if no.
@@ -781,10 +781,12 @@ class Scroll(commands.Cog):
 		global queueDict
 		tempPath = await self.CheckPath(ctx, "tempDict.txt")
 		queuePath = await self.CheckPath(ctx, "queueDict.txt")
-		param = param.split(" ")
 		author = ctx.author
-		if len(param) != 2:
-			await ctx.send(f"{author.mention}:\nERROR: incorrect amount of parameters provided.")
+		if len(param) < 2:
+			await ctx.send(f"{author.mention}:\nERROR: incorrect amount of parameters provided. Too few")
+		else if len(param > 2: 
+			await ctx.send(f"{author.mention}:\nERROR: incorrect amount of parameters provided. Too many!")
+
 		else:
 			regionstr = param[1].lower().split("region=")[1].replace('_', ' ')
 			template = param[0]
