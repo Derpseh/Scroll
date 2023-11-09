@@ -1,0 +1,7 @@
+{
+    "author": ["Derpseh/Devi"],
+    "name": "Scroll",
+	"description": "A cog for the Redbot Discord bot framework that adds manual recruitment functionality for use in the Nationstates browser game.",
+    "install_msg": "Thanks for installing!\nUse `[p]help Scroll` to get a list of commands and their descriptions.",
+    "requirements": ["lxml"]
+}
