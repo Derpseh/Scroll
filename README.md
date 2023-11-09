@@ -34,7 +34,7 @@ Instructions on setting RedBot itself can be found [here](https://docs.discord.r
 
 `template list`: provides a list of templates currently registered to you.
 
-`rec start <template number>`: starts an active recruiting session. template number here **does not** mean the %template-id% string used above, but rather the number shown when you use `[b]template list`. Thus: recruiting with the first template registered to you would be `[b]start 1`, and so on.
+`rec start <template number>`: starts an active recruiting session. template number here **does not** mean the %template-id% string used above, but rather the number shown when you use `[p]template list`. Thus: recruiting with the first template registered to you would be `[p]rec start 1`, and so on.
 
 `rec stop`: removes yourself from the current recruiting session, and ends it if no one is left actively recruiting.
 
