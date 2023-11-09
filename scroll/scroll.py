@@ -48,6 +48,7 @@ numeralmatch = re.compile(r'(?i)[-_ ](?=[MDCLXVI]+\b)(M{0,4}(CM|CD|D?C{0,3})(XC|
 global delayTime
 delayTime = 60
 global regionWhiteList
+regionWhiteList = []
 
 
 class Scroll(commands.Cog):
@@ -544,7 +545,7 @@ class Scroll(commands.Cog):
 						#check if the happening isn't too old (2d cutoff)
 						if not((time.time() - int(timeslist[a].string)) > 172000):
 							#basic number filter; do a tgcanrecruit check if there's none
-							if not(any(char.isdigit() for char in b)) and not(re.search(numeralmatch, b)):
+							if not(any(char.isdigit() for char in b)) and not(re.search(numeralmatch, b) and regionlist[count] in regionWhiteList):
 								await asyncio.sleep(0.7)
 								req2 = requests.get(f"https://www.nationstates.net/cgi-bin/api.cgi?nation={b}&q=tgcanrecruit", headers=headers)
 								#if recruiting is available; yeet them into the "good" list along with their id
@@ -623,7 +624,7 @@ class Scroll(commands.Cog):
 			#isolate the nation name
 			b = str(eventlist[a]).split("@@")[1]
 			if "founded" in str(eventlist[a]).split("@@")[2].split("%%")[0]:
-				if not(any(char.isdigit() for char in b)) and not(re.search(numeralmatch, b)):
+				if not(any(char.isdigit() for char in b)) and not(re.search(numeralmatch, b) and regionlist[count] in regionWhiteList):
 					await asyncio.sleep(0.7)
 					req2 = requests.get(f"https://www.nationstates.net/cgi-bin/api.cgi?nation={b}&q=tgcanrecruit", headers=headers)
 					if '1' in req2.text:
@@ -1065,5 +1066,6 @@ class Scroll(commands.Cog):
 		regionWhiteList = list(regions)
 		for a in range(len(regionWhiteList)):
 			regionWhiteList[a]=regionWhiteList[a].replace(" ","_")
+		print(regionWhiteList)
 ###lb format {uid: [count, displayname]}
 ###rec format {region: [[uid1, dispname, templatestring1],[uid2, tempstring2]]}
