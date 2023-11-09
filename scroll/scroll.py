@@ -533,6 +533,13 @@ class Scroll(commands.Cog):
 				req = requests.get("https://www.nationstates.net/cgi-bin/api.cgi?q=happenings;filter=founding+cte;limit=100", headers=headers)
 				eventlist = BeautifulSoup(req.text, "lxml-xml").find_all("EVENT")
 				timeslist = BeautifulSoup(req.text, "lxml-xml").find_all("TIMESTAMP")
+				regionTextlist = BeautifulSoup(req.text, "lxml-xml").find_all("TEXT")
+				regionlist = []
+				for text in regionTextlist:
+					start_index = text.find(start_marker) + len(start_marker)
+					end_index = text.find(end_marker, start_index)
+					if start_index != -1 and end_index != -1:
+						regionlist.append(text[start_index:end_index])
 				ctelist = []
 				list1 = []
 				#api batches come ordered new>old; i want old>new for this
@@ -590,6 +597,7 @@ class Scroll(commands.Cog):
 		req = requests.get(f"https://www.nationstates.net/cgi-bin/api.cgi?q=happenings;filter=founding+cte;limit=100;sinceid={lastID}", headers = headers)
 		eventlist = BeautifulSoup(req.text, "lxml-xml").find_all("EVENT")
 		timeslist = BeautifulSoup(req.text, "lxml-xml").find_all("TIMESTAMP")
+		regionTextlist = BeautifulSoup(req.text, "lxml-xml").find_all("TEXT")
 		ctelist = []
 		print(len(eventlist))
 		#if there's too many to grab with one api request; we'll loop until it returns <100 results; i.e. when we've hit the target id, *OR* when grabbed events are too old to be useful (>2d)
@@ -601,8 +609,10 @@ class Scroll(commands.Cog):
 				req = requests.get(f"https://www.nationstates.net/cgi-bin/api.cgi?q=happenings;filter=founding+cte;limit=100;sinceid={lastID};beforeid={lastID2}", headers = headers)
 				list1 = BeautifulSoup(req.text, "lxml-xml").find_all("EVENT")
 				list2 = BeautifulSoup(req.text, "lxml-xml").find_all("TIMESTAMP")
+				list3 = BeautifulSoup(req.text, "lxml-xml").find_all("TEXT")
 				timeslist.extend(list2)
 				eventlist.extend(list1)
+				regionTextlist.extend(list3)
 				print(len(eventlist))
 				if not(len(list1) == 0):
 					lastID2 = list1[-1].get('id')
@@ -615,10 +625,17 @@ class Scroll(commands.Cog):
 			pass
 		with open(lastPath[0], 'w') as f:
 			f.write(lastID)
+		regionlist = []
+		for text in regionTextlist:
+			start_index = text.find(start_marker) + len(start_marker)
+			end_index = text.find(end_marker, start_index)
+			if start_index != -1 and end_index != -1:
+				regionlist.append(text[start_index:end_index])
 		#no need to do any extra else-ing if the list was already <100 length
 		#reverse the list so we're reading old->new
 		eventlist.reverse()
 		timeslist.reverse()
+		regionlist.reverse()
 		list1 = []
 		for a in range(len(eventlist)):
 			#isolate the nation name
