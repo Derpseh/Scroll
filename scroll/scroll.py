@@ -916,6 +916,7 @@ class Scroll(commands.Cog):
 		global queueDict
 		tempPath = await self.CheckPath(ctx, "tempDict.txt")
 		queuePath = await self.CheckPath(ctx, "queueDict.txt")
+		author = ctx.author
 		if tempDict == False:
 			if tempPath[1] == False:
 				await ctx.send(f"{author.mention}:\nNo template data found; please register a template with >template add.")
