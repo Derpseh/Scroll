@@ -801,47 +801,18 @@ class Scroll(commands.Cog):
 			await ctx.send(f"{author.mention}:\nERROR: incorrect amount of parameters provided. Too many!")
 
 		else:
-			regionstr = param[1].lower().split("region=")[1].replace('_', ' ')
-			template = param[0]
-			if tempDict == False:
-				#if there's no pre-existing template data, we make a blank set and register :)
-				#the same goes for backlog if *that* doesn't exist
-				#TODO (maybe): prevent the user from registering the same template id multiple times?
-				if tempPath[1] == False:
-					tempDict = {str(author.id): [[template, regionstr]]}
-					with open(tempPath[0], 'w') as f:
-						f.write(str(tempDict))
-					await ctx.send(f"{author.mention}:\nTemplate `{template}` has been registered for the region `{regionstr}`.")
-					if queueDict == False:
-						if queuePath[1] == False:
-							queueDict = {"DEFAULT": [[],[],[]]}
-							with open(queuePath[0], 'w') as f:
-								f.write(str(queueDict))
-						else:
-							with open(queuePath[0], 'r') as f:
-								readtemp = f.readline()
-							try:
-								queueDict = ast.literal_eval(readtemp)
-							except:
-								await ctx.send(f"{author.mention}:\nERROR: Queue data has been found corrupted while updating queue settings.")
-								queueDict = {"DEFAULT": [[],[],[]], regionstr: [[],[],[]]}
-								with open(queuePath[0], 'w') as f:
-									f.write(str(queueDict))
-								return
-					if not(regionstr in queueDict):
-						queueDict[regionstr] = queueDict["DEFAULT"]
-						with open(queuePath[0], 'w') as f:
-							f.write(str(queueDict))
-					return
-				else:
-					with open(tempPath[0], 'r') as f:
-						readtemp = f.readline()
-					try:
-						tempDict = ast.literal_eval(readtemp)
-					except:
-						await ctx.send(f"{author.mention}:\nERROR: Template data is corrupted; deleting data.\nAdding new template `{template}` for region `{regionstr}`.")
-						os.remove(tempPath[0])
+			if "region=" in param[1]:
+				regionstr = param[1].lower().split("region=")[1].replace('_', ' ')
+				template = param[0]
+				if tempDict == False:
+					#if there's no pre-existing template data, we make a blank set and register :)
+					#the same goes for backlog if *that* doesn't exist
+					#TODO (maybe): prevent the user from registering the same template id multiple times?
+					if tempPath[1] == False:
 						tempDict = {str(author.id): [[template, regionstr]]}
+						with open(tempPath[0], 'w') as f:
+							f.write(str(tempDict))
+						await ctx.send(f"{author.mention}:\nTemplate `{template}` has been registered for the region `{regionstr}`.")
 						if queueDict == False:
 							if queuePath[1] == False:
 								queueDict = {"DEFAULT": [[],[],[]]}
@@ -863,35 +834,67 @@ class Scroll(commands.Cog):
 							with open(queuePath[0], 'w') as f:
 								f.write(str(queueDict))
 						return
-			if str(author.id) in tempDict:
-				#if the author already has templates registered, yeet it onto the list; if not, make a new entry to the dict
-				tempDict[str(author.id)].append([template, regionstr])
-			else:
-				tempDict[str(author.id)] = [[template, regionstr]]
-			with open(tempPath[0], 'w') as f:
-				f.write(str(tempDict))
-			await ctx.send(f"{author.mention}:\nTemplate `{template}` has been registered for the region `{regionstr}`.")
-			if queueDict == False:
-				#and once again generating a fresh backlog / regional backlog if they don't already exist
-				if queuePath[1] == False:
-					queueDict = {"DEFAULT": [[],[],[]], regionstr: [[],[],[]]}
-					with open(queuePath[0], 'w') as f:
-						f.write(str(queueDict))
+					else:
+						with open(tempPath[0], 'r') as f:
+							readtemp = f.readline()
+						try:
+							tempDict = ast.literal_eval(readtemp)
+						except:
+							await ctx.send(f"{author.mention}:\nERROR: Template data is corrupted; deleting data.\nAdding new template `{template}` for region `{regionstr}`.")
+							os.remove(tempPath[0])
+							tempDict = {str(author.id): [[template, regionstr]]}
+							if queueDict == False:
+								if queuePath[1] == False:
+									queueDict = {"DEFAULT": [[],[],[]]}
+									with open(queuePath[0], 'w') as f:
+										f.write(str(queueDict))
+								else:
+									with open(queuePath[0], 'r') as f:
+										readtemp = f.readline()
+									try:
+										queueDict = ast.literal_eval(readtemp)
+									except:
+										await ctx.send(f"{author.mention}:\nERROR: Queue data has been found corrupted while updating queue settings.")
+										queueDict = {"DEFAULT": [[],[],[]], regionstr: [[],[],[]]}
+										with open(queuePath[0], 'w') as f:
+											f.write(str(queueDict))
+										return
+							if not(regionstr in queueDict):
+								queueDict[regionstr] = queueDict["DEFAULT"]
+								with open(queuePath[0], 'w') as f:
+									f.write(str(queueDict))
+							return
+				if str(author.id) in tempDict:
+					#if the author already has templates registered, yeet it onto the list; if not, make a new entry to the dict
+					tempDict[str(author.id)].append([template, regionstr])
 				else:
-					with open(queuePath[0], 'r') as f:
-						readtemp = f.readline()
-					try:
-						queueDict = ast.literal_eval(readtemp)
-					except:
-						await ctx.send(f"{author.mention}:\nERROR: Queue data has been found corrupted while updating queue settings.")
+					tempDict[str(author.id)] = [[template, regionstr]]
+				with open(tempPath[0], 'w') as f:
+					f.write(str(tempDict))
+				await ctx.send(f"{author.mention}:\nTemplate `{template}` has been registered for the region `{regionstr}`.")
+				if queueDict == False:
+					#and once again generating a fresh backlog / regional backlog if they don't already exist
+					if queuePath[1] == False:
 						queueDict = {"DEFAULT": [[],[],[]], regionstr: [[],[],[]]}
 						with open(queuePath[0], 'w') as f:
 							f.write(str(queueDict))
-						return
-			if not(regionstr in queueDict):
-				queueDict[regionstr] = queueDict["DEFAULT"]
-				with open(queuePath[0], 'w') as f:
-					f.write(str(queueDict))
+					else:
+						with open(queuePath[0], 'r') as f:
+							readtemp = f.readline()
+						try:
+							queueDict = ast.literal_eval(readtemp)
+						except:
+							await ctx.send(f"{author.mention}:\nERROR: Queue data has been found corrupted while updating queue settings.")
+							queueDict = {"DEFAULT": [[],[],[]], regionstr: [[],[],[]]}
+							with open(queuePath[0], 'w') as f:
+								f.write(str(queueDict))
+							return
+				if not(regionstr in queueDict):
+					queueDict[regionstr] = queueDict["DEFAULT"]
+					with open(queuePath[0], 'w') as f:
+						f.write(str(queueDict))
+			else:
+				await ctx.send(f"{author.mention}: An invalid region URL has been provided.")
 	@template.command(name="remove", usage = "<%template-id%>")
 	async def remove(self, ctx, template : str):
 		"""Removes a template currently registered to you."""
