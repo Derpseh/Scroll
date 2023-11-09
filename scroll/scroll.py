@@ -1076,13 +1076,14 @@ class Scroll(commands.Cog):
 		except:
 			await ctx.send("The value given is not a valid integer. Please input a whole number between 50 and 250")
 			
-	@commands.command(name="regionWhiteList")
+	@commands.command(name="regionwhitelist")
 	async def regionWhiteList(self, ctx, *regions):
 		"""Designates a list of regions to ignore founds/refounds in."""
 		global regionWhiteList
 		regionWhiteList = list(regions)
 		for a in range(len(regionWhiteList)):
 			regionWhiteList[a]=regionWhiteList[a].replace(" ","_")
+		await ctx.send(f"{ctx.author}: The following regions will no longer be recruited from: `{str(regionWhiteList[1:-1])}`")
 		print(regionWhiteList)
 ###lb format {uid: [count, displayname]}
 ###rec format {region: [[uid1, dispname, templatestring1],[uid2, tempstring2]]}
