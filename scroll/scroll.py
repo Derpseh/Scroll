@@ -231,11 +231,6 @@ class Scroll(commands.Cog):
 	@commands.bot_in_a_guild()
 	async def rec(self, ctx):
 		"""Starts or stops an active recruitment session."""
-
-	@rec.command(name="regionWhiteList")
-	async def regionWhiteList(self, ctx, regions*):
-		global regionWhiteList
-		regionWhiteLis=regions.replace(" ","_")
 		
 	@rec.command(name="start")
 	async def start(self, ctx, templatenumber: str):
@@ -1062,5 +1057,11 @@ class Scroll(commands.Cog):
 				await ctx.send("The provided value is outside of the given range. Please use a whole number between 50 and 250 seconds.")
 		except:
 			await ctx.send("The value given is not a valid integer. Please input a whole number between 50 and 250")
+			
+	@commands.command(name="regionWhiteList")
+	async def regionWhiteList(self, ctx, regions*):
+		"""Designates a list of regions to ignore founds/refounds in."""
+		global regionWhiteList
+		regionWhiteList=regions.replace(" ","_")
 ###lb format {uid: [count, displayname]}
 ###rec format {region: [[uid1, dispname, templatestring1],[uid2, tempstring2]]}
