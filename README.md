@@ -48,5 +48,7 @@ Instructions on setting RedBot itself can be found [here](https://docs.discord.r
 
 `tgqueue`: displays how many telegrams NS has queued for delivery for manual/api/stamps.
 
+`regionWhiteList`: Designates a list of regions to ignore founds/refounds in.
+
 ## Credits
 [Twentysix26](https://github.com/Twentysix26) - Creator of the Red discord bot framework i'm piggybacking off of.
