@@ -539,7 +539,7 @@ class Scroll(commands.Cog):
 				#api batches come ordered new>old; i want old>new for this
 				eventlist.reverse()
 				timeslist.reverse()
-				for a in range(len(eventlist)):
+				for count,a in enumerate(range(len(eventlist))):
 					#isolate the nation name
 					b = str(eventlist[a]).split("@@")[1]
 					if "founded" in str(eventlist[a]).split("@@")[2].split("%%")[0]:
@@ -628,7 +628,7 @@ class Scroll(commands.Cog):
 		timeslist.reverse()
 		regionlist.reverse()
 		list1 = []
-		for a in range(len(eventlist)):
+		for count,a in enumerate(range(len(eventlist))):
 			#isolate the nation name
 			b = str(eventlist[a]).split("@@")[1]
 			if "founded" in str(eventlist[a]).split("@@")[2].split("%%")[0]:
