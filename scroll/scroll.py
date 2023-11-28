@@ -139,7 +139,7 @@ class Scroll(commands.Cog):
 				#if there's a roman numeral at the end, or an arabic number period, we run a check for if the nation can accept recruitment TGs (with a 0.7s timer to make sure we don't run afoul of api limits)
 				#if it passes both checks, it gets yeeted onto the list of usable stuff
 				#TODO: change all the print() stuff to output to a log file or something instead lmao
-				if not(any(char.isdigit() for char in str(b))) and not(re.search(numeralmatch, b) and regionlist[count] in regionWhiteList):
+				if not(any(char.isdigit() for char in str(b))) and not(re.search(numeralmatch, b)) and not(regionlist[count] in regionWhiteList):
 					await asyncio.sleep(0.7)
 					req2 = requests.get(f"https://www.nationstates.net/cgi-bin/api.cgi?nation={b}&q=tgcanrecruit", headers = headers)
 					if '1' in req2.text:
@@ -546,7 +546,7 @@ class Scroll(commands.Cog):
 						#check if the happening isn't too old (2d cutoff)
 						if not((time.time() - int(timeslist[a].string)) > 172000):
 							#basic number filter; do a tgcanrecruit check if there's none
-							if not(any(char.isdigit() for char in b)) and not(re.search(numeralmatch, b) and regionlist[count] in regionWhiteList):
+							if not(any(char.isdigit() for char in b)) and not(re.search(numeralmatch, b)) and not(regionlist[count] in regionWhiteList):
 								await asyncio.sleep(0.7)
 								req2 = requests.get(f"https://www.nationstates.net/cgi-bin/api.cgi?nation={b}&q=tgcanrecruit", headers=headers)
 								#if recruiting is available; yeet them into the "good" list along with their id
@@ -632,7 +632,7 @@ class Scroll(commands.Cog):
 			#isolate the nation name
 			b = str(eventlist[a]).split("@@")[1]
 			if "founded" in str(eventlist[a]).split("@@")[2].split("%%")[0]:
-				if not(any(char.isdigit() for char in b)) and not(re.search(numeralmatch, b) and regionlist[count] in regionWhiteList):
+				if not(any(char.isdigit() for char in b)) and not(re.search(numeralmatch, b)) and not(regionlist[count] in regionWhiteList):
 					await asyncio.sleep(0.7)
 					req2 = requests.get(f"https://www.nationstates.net/cgi-bin/api.cgi?nation={b}&q=tgcanrecruit", headers=headers)
 					if '1' in req2.text:
