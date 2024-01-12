@@ -162,6 +162,12 @@ class Scroll(commands.Cog):
 				queueDict[key][0].append(a[0])
 				queueDict[key][1].append(a[1])
 				queueDict[key][2].append(a[2])
+			for key2 in queueDict:
+				if not(key2 in recDict):
+					for a in activeQueue:
+					queueDict[key2][0].append(a[0])
+					queueDict[key2][1].append(a[1])
+					queueDict[key2][2].append(a[2])
 			#if there's enough fresh nations in the queue to give a full set of 8 to every person currently recruiting
 			#we chop off the relevant bits 
 			if (len(queueDict[key][0]) >= numRecruiters * 8):
