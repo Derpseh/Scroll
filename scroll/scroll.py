@@ -162,18 +162,34 @@ class Scroll(commands.Cog):
 				queueDict[key][0].append(a[0])
 				queueDict[key][1].append(a[1])
 				queueDict[key][2].append(a[2])
-				queueDict[key][0] = list(dict.fromkeys(queueDict[key][0]))
-				queueDict[key][1] = list(dict.fromkeys(queueDict[key][1]))
-				queueDict[key][2] = list(dict.fromkeys(queueDict[key][2]))
+				temp1 = []
+				temp2 = []
+				temp3 = []
+				for b in range(len(queueDict[key][0])):
+					if not(queueDict[key][0][b] in temp1):
+						temp1.append(queueDict[key][0][b])
+						temp2.append(queueDict[key][1][b])
+						temp3.append(queueDict[key][2][b])
+				queueDict[key][0] = temp1
+				queueDict[key][1] = temp2
+				queueDict[key][2] = temp3
 			for key2 in queueDict:
 				if not(key2 in recDict):
 					for a in activeQueue:
 						queueDict[key2][0].append(a[0])
 						queueDict[key2][1].append(a[1])
 						queueDict[key2][2].append(a[2])
-						queueDict[key2][0] = list(dict.fromkeys(queueDict[key2][0]))
-						queueDict[key2][1] = list(dict.fromkeys(queueDict[key2][1]))
-						queueDict[key2][2] = list(dict.fromkeys(queueDict[key2][2]))
+						temp1 = []
+						temp2 = []
+						temp3 = []
+						for b in range(len(queueDict[key2][0])):
+							if not(queueDict[key2][0][b] in temp1):
+								temp1.append(queueDict[key2][0][b])
+								temp2.append(queueDict[key2][1][b])
+								temp3.append(queueDict[key2][2][b])
+						queueDict[key2][0] = temp1
+						queueDict[key2][1] = temp2
+						queueDict[key2][2] = temp3
 			#if there's enough fresh nations in the queue to give a full set of 8 to every person currently recruiting
 			#we chop off the relevant bits 
 			if (len(queueDict[key][0]) >= numRecruiters * 8):
