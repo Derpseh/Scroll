@@ -667,12 +667,14 @@ class Scroll(commands.Cog):
 			tempa = []
 			tempb = []
 			tempc = []
-			for a in range(len(queueDict[key][0])):
+			b = 0
+			for a in queueDict[key][0]:
 				#grab the ones that aren't too old or on the list of stuff that's CTE'd since; paste back in after
-				if ((time.time() - queueDict[key][2][a]) < 172000) and (queueDict[key][0][a] not in ctelist):
-					tempa.append(queueDict[key][0][a])
-					tempb.append(queueDict[key][1][a])
-					tempc.append(queueDict[key][2][a])
+				if ((time.time() - queueDict[key][2][b]) < 172000): #and (queueDict[key][0][a] not in ctelist):
+					tempa.append(queueDict[key][0][b])
+					tempb.append(queueDict[key][1][b])
+					tempc.append(queueDict[key][2][b])
+				b += 1
 			queueDict[key] = [tempa, tempb, tempc]
 		#and writing the current queue to file
 		with open(queuePath[0], "w") as f:
