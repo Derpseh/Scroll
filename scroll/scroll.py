@@ -371,7 +371,7 @@ class Scroll(commands.Cog):
 						lbRegDict = ast.literal_eval(readtemp)
 					except:
 						await ctx.send(f"{ctx.author.id}:\nERROR: Regional Leaderboard data is corrupted; deleting the file.")
-							os.remove(lbRegPath[0])
+						os.remove(lbRegPath[0])
 			if not(str(author.id) in lbRegDict[tempRegion]):
 				lbRegDict[tempRegion][str(author.id)] = [0, str(author.display_name)]
 			#we yeet the tasks for background population at the start of a session, and restart them after
