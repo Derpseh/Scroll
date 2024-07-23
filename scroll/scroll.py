@@ -1050,7 +1050,7 @@ class Scroll(commands.Cog):
 		headers = {"User-Agent": f"Scroll manual recruitment cog for Discord's RedBot (developer:valkynora@gmail.com; current instance run by: {agent})"}
 		await ctx.send(f"User-Agent has been set to {agent}.")
 		
-	@commands.group(name="leaderboards")
+	@commands.command()
 	async def leaderboards(self, ctx):
 		"""Displays the recruitment leaderboards."""
 		global lbDict
@@ -1081,8 +1081,8 @@ class Scroll(commands.Cog):
 			sendstring += f"{str(num)}. `{str(lbDict[key][1])}`: {str(lbDict[key][0])}\n"
 			num += 1
 		await ctx.send(sendstring)
-	@leaderboards.command(name="region", usage="<region name>")
-	async def region(self, ctx, *, region: str):
+	@commands.command()
+	async def regionboards(self, ctx, *, region: str):
 		"""Displays the recruitment leaderboards for a specific region."""
 		global lbRegDict
 		lbRegPath = await self.CheckPath(ctx, "regionboards.txt")
