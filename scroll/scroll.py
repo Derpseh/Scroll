@@ -95,10 +95,10 @@ class Scroll(commands.Cog):
 				lbPath = await self.CheckPath(ctx, "leaderboards.txt")
 				with open(lbPath[0], "w") as f:
 					f.write(str(lbDict))
-                lbRegPath = await self.CheckPath(ctx, "regionboards.txt")
-                lbRegDict[key][recDict[key][0][0]][0] += 8
-                with open(lbRegPath[0], "w") as f:
-                    f.write(str(lbRegDict))
+				lbRegPath = await self.CheckPath(ctx, "regionboards.txt")
+				lbRegDict[key][recDict[key][0][0]][0] += 8
+				with open(lbRegPath[0], "w") as f:
+					f.write(str(lbRegDict))
 			else:
 				await ctx.send("Not enough nations could be found, please wait a moment.")
 		await asyncio.sleep(delayTime)
@@ -218,7 +218,7 @@ class Scroll(commands.Cog):
 					buttonView.add_item(item=item)
 					pingString += f"<@{a[0][0]}> \n`{str(a[1])[1:-1]}`\n"
 					lbDict[a[0][0]][0] += len(a[1])
-                    lbRegDict[key][a[0][0]][0] += len(a[1])
+					lbRegDict[key][a[0][0]][0] += len(a[1])
 				lastTime[key] = time.time()
 				#and we send out the message with a ping to everyone active recruiting!
 				await ctx.send(f"A new batch of nations has been founded; please follow the provided button and press \"Send\".\n\n__**TARGETS:**__\n{pingString[:-1]}", view=buttonView)
@@ -244,7 +244,7 @@ class Scroll(commands.Cog):
 						buttonView.add_item(item=item)
 						pingString += f"<@{a[0][0]}> \n`{str(a[1])[1:-1]}`\n"
 						lbDict[a[0][0]][0] += len(a[1])
-                        lbRegDict[key][a[0][0]][0] += len(a[1])
+						lbRegDict[key][a[0][0]][0] += len(a[1])
 					lastTime[key] = time.time()
 					await ctx.send(f"A new batch of nations has been founded; please follow the provided button and press \"Send\".\n\n__**TARGETS:**__\n{pingString[:-1]}", view = buttonView)
 				else:
@@ -256,9 +256,9 @@ class Scroll(commands.Cog):
 		lbPath = await self.CheckPath(ctx, "leaderboards.txt")
 		with open(lbPath[0], "w") as f:
 			f.write(str(lbDict))
-        lbRegPath = await self.CheckPath(ctx, "regionboards.txt")
-        with open(lbRegPath[0], "w") as f:
-            f.write(str(lbRegDict))
+		lbRegPath = await self.CheckPath(ctx, "regionboards.txt")
+		with open(lbRegPath[0], "w") as f:
+			f.write(str(lbRegDict))
 		queuePath = await self.CheckPath(ctx, "queueDict.txt")
 		with open(queuePath[0], "w") as f:
 			f.write(str(queueDict))
@@ -290,7 +290,7 @@ class Scroll(commands.Cog):
 		global delayTime
 		author = ctx.author
 		lbPath = await self.CheckPath(ctx, "leaderboards.txt")
-        lbRegPath = await self.CheckPath(ctx, "regionboards.txt")
+		lbRegPath = await self.CheckPath(ctx, "regionboards.txt")
 		if headers == False:
 			#we want a user agent for doing API stuff, so this block checks if there's one currently set or externally stored, and tells the user to set one if not
 			agentPath = await self.CheckPath(ctx, "uagent.cfg")
@@ -362,18 +362,18 @@ class Scroll(commands.Cog):
 						os.remove(lbPath[0])
 			if not(str(author.id) in lbDict):
 				lbDict[str(author.id)] = [0, str(author.display_name)]
-            #doin' the same thing for regional leaderboards:
-            if lbRegDict == {}:
-                if lbRegPath == True:
-                    with open(lbRegPath[0], 'r') as f:
-                        readtemp = f.readline()
-                    try:
-                        lbRegDict = ast.literal_eval(readtemp)
-                    except:
-                        await ctx.send(f"{ctx.author.id}:\nERROR: Regional Leaderboard data is corrupted; deleting the file.")
-                        os.remove(lbRegPath[0])
-            if not(str(author.id) in lbRegDict[tempRegion]):
-                lbRegDict[tempRegion][str(author.id)] = [0, str(author.display_name)]
+			#doin' the same thing for regional leaderboards:
+			if lbRegDict == {}:
+				if lbRegPath == True:
+					with open(lbRegPath[0], 'r') as f:
+						readtemp = f.readline()
+					try:
+						lbRegDict = ast.literal_eval(readtemp)
+					except:
+						await ctx.send(f"{ctx.author.id}:\nERROR: Regional Leaderboard data is corrupted; deleting the file.")
+							os.remove(lbRegPath[0])
+			if not(str(author.id) in lbRegDict[tempRegion]):
+				lbRegDict[tempRegion][str(author.id)] = [0, str(author.display_name)]
 			#we yeet the tasks for background population at the start of a session, and restart them after
 			#to make sure it doesn't do that while a session's active. this is a) for API reasons, and b) everything founded in that timeframe gets added anyway (once the TODO a bit further up gets addressed lmao)
 			current.cancel()
@@ -394,8 +394,8 @@ class Scroll(commands.Cog):
 			else:
 				if not(str(author.id) in lbDict):
 					lbDict[str(author.id)] = [0, str(author.display_name)]
-                if not(str(author.id) in lbRegDict[tempRegion]):
-                    lbRegDict[tempRegion][str(author.id)] = [0, str(author.display_name)]
+				if not(str(author.id) in lbRegDict[tempRegion]):
+					lbRegDict[tempRegion][str(author.id)] = [0, str(author.display_name)]
 				if tempRegion in recDict:
 					recDict[tempRegion].append([str(author.id),str(author.display_name),tempString])
 					await ctx.send(f"{author.mention} is now recruiting using template `{tempString}`.")
@@ -1070,48 +1070,48 @@ class Scroll(commands.Cog):
 					await ctx.send(f"{ctx.author.id}:\nERROR: Leaderboard data is corrupted; deleting the leaderboard file.")
 					os.remove(lbPath[0])
 					return
-        totalCount = 0
-        for key in lbDict:
-            totalCount += lbDict[key][0]
+		totalCount = 0
+		for key in lbDict:
+			totalCount += lbDict[key][0]
 		sendstring = "**__LEADERBOARDS__**\nTotal telegrams sent via Scroll: {str(totalCount)}\n"
 		num = 1
 		#this abomination sorts a dict by an item in a list associated with each key :))
 		#we use this to display a nice ranked list for leaderboard purposes
 		for key in {k: v for k, v in sorted(lbDict.items(), key = lambda item: item[1], reverse=True)}:
 			sendstring += f"{str(num)}. `{str(lbDict[key][1])}`: {str(lbDict[key][0])}\n"
-            num += 1
+			num += 1
 		await ctx.send(sendstring)
 	@leaderboards.command(name="region", usage="<region name>")
 	async def region(self, ctx, *, region: str):
-        """Displays the recruitment leaderboards for a specific region."""
-        global lbRegDict
-        lbRegPath = await self.CheckPath(ctx, "regionboards.txt")
-        #we've all seen this a million times :')
-        if lbRegDict == {}:
-            if lbRegPath[1] == False:
-                await ctx.send("No regional leaderboard data has been found, please recruit to populate the leaderboards.")
-                return
-            else:
-                with open(lbRegPath[0], 'r') as f:
-                    readtemp = f.readline()
-                try:
-                    lbRegDict = ast.literal_eval(readtemp)
-                except:
-                    await ctx.send(f"{ctx.author.id}:\nERROR: Leaderboard data is corrupted; deleting the regional leaderboard file.")
-                    os.remove(lbRegPath[0])
-                    return
-        if region in lbRegDict:
-            totalCount = 0
-            for key in lbRegDict[region]:
-                totalCount += lbRegDict[region][key][0]
-            sendstring = f"**__LEADERBOARDS FOR {region}__**\nTotal telegrams sent via Scroll: {str(totalCount)}\n"
-            num = 1
-            for key in {k: v for k, v in sorted(lbRegDict[region].items(), key = lambda item: item[1], reverse=True)}:
-                sendstring += f"{str(num)}. `{str(lbRegDict[region][key][1])}`: {str(lbRegDict[region][key][0])}\n"
-                num += 1
-            await ctx.send(sendstring)
-        else:
-            await ctx.send("No region with that name could be found in leaderboard data.")
+		"""Displays the recruitment leaderboards for a specific region."""
+		global lbRegDict
+		lbRegPath = await self.CheckPath(ctx, "regionboards.txt")
+		#we've all seen this a million times :')
+		if lbRegDict == {}:
+			if lbRegPath[1] == False:
+				await ctx.send("No regional leaderboard data has been found, please recruit to populate the leaderboards.")
+				return
+			else:
+				with open(lbRegPath[0], 'r') as f:
+					readtemp = f.readline()
+				try:
+					lbRegDict = ast.literal_eval(readtemp)
+				except:
+					await ctx.send(f"{ctx.author.id}:\nERROR: Leaderboard data is corrupted; deleting the regional leaderboard file.")
+					os.remove(lbRegPath[0])
+					return
+		if region in lbRegDict:
+			totalCount = 0
+			for key in lbRegDict[region]:
+				totalCount += lbRegDict[region][key][0]
+			sendstring = f"**__LEADERBOARDS FOR {region}__**\nTotal telegrams sent via Scroll: {str(totalCount)}\n"
+			num = 1
+			for key in {k: v for k, v in sorted(lbRegDict[region].items(), key = lambda item: item[1], reverse=True)}:
+				sendstring += f"{str(num)}. `{str(lbRegDict[region][key][1])}`: {str(lbRegDict[region][key][0])}\n"
+				num += 1
+			await ctx.send(sendstring)
+		else:
+			await ctx.send("No region with that name could be found in leaderboard data.")
 	@commands.command()
 	async def tgqueue(self, ctx):
 		"""Displays the current NS TGAPI Telegram queue."""
