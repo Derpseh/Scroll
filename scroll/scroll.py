@@ -1073,7 +1073,7 @@ class Scroll(commands.Cog):
 		totalCount = 0
 		for key in lbDict:
 			totalCount += lbDict[key][0]
-		sendstring = "**__LEADERBOARDS__**\nTotal telegrams sent via Scroll: {str(totalCount)}\n"
+		sendstring = f"**__LEADERBOARDS__**\nTotal telegrams sent via Scroll: {str(totalCount)}\n"
 		num = 1
 		#this abomination sorts a dict by an item in a list associated with each key :))
 		#we use this to display a nice ranked list for leaderboard purposes
@@ -1104,7 +1104,7 @@ class Scroll(commands.Cog):
 			totalCount = 0
 			for key in lbRegDict[region]:
 				totalCount += lbRegDict[region][key][0]
-			sendstring = f"**__LEADERBOARDS FOR {region}__**\nTotal telegrams sent via Scroll: {str(totalCount)}\n"
+			sendstring = f"**__LEADERBOARDS FOR {region.upper()}__**\nTotal telegrams sent via Scroll: {str(totalCount)}\n"
 			num = 1
 			for key in {k: v for k, v in sorted(lbRegDict[region].items(), key = lambda item: item[1], reverse=True)}:
 				sendstring += f"{str(num)}. `{str(lbRegDict[region][key][1])}`: {str(lbRegDict[region][key][0])}\n"
