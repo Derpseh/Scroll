@@ -1050,7 +1050,7 @@ class Scroll(commands.Cog):
 		headers = {"User-Agent": f"Scroll manual recruitment cog for Discord's RedBot (developer:valkynora@gmail.com; current instance run by: {agent})"}
 		await ctx.send(f"User-Agent has been set to {agent}.")
 		
-	@commands.command()
+	@commands.group(name="leaderboards")
 	async def leaderboards(self, ctx):
 		"""Displays the recruitment leaderboards."""
 		global lbDict
