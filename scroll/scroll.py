@@ -367,7 +367,7 @@ class Scroll(commands.Cog):
 				lbDict[str(author.id)] = [0, str(author.display_name)]
 			#doin' the same thing for regional leaderboards:
 			if lbRegDict == {}:
-				if lbRegPath == True:
+				if lbRegPath[1] == True:
 					with open(lbRegPath[0], 'r') as f:
 						readtemp = f.readline()
 					try:
@@ -375,6 +375,9 @@ class Scroll(commands.Cog):
 					except:
 						await ctx.send(f"{ctx.author.id}:\nERROR: Regional Leaderboard data is corrupted; deleting the file.")
 						os.remove(lbRegPath[0])
+			print(lbRegDict)
+			#if not(tempRegion in lbRegDict):
+				#lbRegDict
 			if not(str(author.id) in lbRegDict[tempRegion]):
 				lbRegDict[tempRegion][str(author.id)] = [0, str(author.display_name)]
 			#we yeet the tasks for background population at the start of a session, and restart them after
