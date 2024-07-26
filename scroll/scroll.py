@@ -76,6 +76,7 @@ class Scroll(commands.Cog):
 		global lbDict
 		global queueDict
 		global delayTime
+        global lbRegDict
 		#the dict of active recruiters and backlog are both keyed by the region that's being recruited/backlogged for for convenience
 		#here we're just seeing if there's enough for a full bucket, spitting it out if so, and sending a boilerplate if not
 		for key in recDict:
@@ -124,6 +125,7 @@ class Scroll(commands.Cog):
 		global activeQueue
 		global current4
 		global regionWhiteList
+        global lbRegDict
 		#once again logging for session end/forcestop purposes
 		current4 = asyncio.current_task()
 		#grabbing every new found since the last time a similar ping was made
@@ -288,6 +290,7 @@ class Scroll(commands.Cog):
 		global current
 		global current2
 		global delayTime
+        global lbRegDict
 		author = ctx.author
 		lbPath = await self.CheckPath(ctx, "leaderboards.txt")
 		lbRegPath = await self.CheckPath(ctx, "regionboards.txt")
