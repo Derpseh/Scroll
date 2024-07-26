@@ -85,7 +85,7 @@ class Scroll(commands.Cog):
 				for a in queueDict[key]:
 					del a[-8:]
 				buttonView = discord.ui.View()
-				item = discord.ui.Button(style=discord.ButtonStyle.gray, label=str(recDict[key][0][1]), url="https://www.nationstates.net/page=compose_telegram?tgto={recipients}&message={message}".format(recipients = str(natList)[1:-1].replace("'","").replace(" ",""), message = recDict[key][0][2].replace("%","%25")))
+				item = discord.ui.Button(style=discord.ButtonStyle.gray, label=str(recDict[key][0][1]), url="https://www.nationstates.net/page=compose_telegram?tgto={recipients}&message={message}&generated_by=scroll_discord_bot__by_devi__usedby_{user}".format(recipients = str(natList)[1:-1].replace("'","").replace(" ",""), message = recDict[key][0][2].replace("%","%25"), user = recDict[key][0][1]))
 				buttonView.add_item(item=item)
 				await ctx.send(f"A new batch of nations has been founded; please follow the provided button and press \"Send\".\n\n__**TARGETS:**__\n<@{recDict[key][0][0]}>\n`{str(natList)[1:-1]}`", view = buttonView)
 				queuePath = await self.CheckPath(ctx, "queueDict.txt")
@@ -216,7 +216,7 @@ class Scroll(commands.Cog):
 				buttonView = discord.ui.View()
 				pingString = ""
 				for a in sendList:
-					item = discord.ui.Button(style=discord.ButtonStyle.gray, label=str(a[0][1]), url="https://www.nationstates.net/page=compose_telegram?tgto={recipients}&message={message}".format(recipients = str(a[1])[1:-1].replace("'","").replace(" ",""), message = a[0][2].replace("%","%25")))
+					item = discord.ui.Button(style=discord.ButtonStyle.gray, label=str(a[0][1]), url="https://www.nationstates.net/page=compose_telegram?tgto={recipients}&message={message}&generated_by=scroll_discord_bot__by_devi__usedby_{user}".format(recipients = str(a[1])[1:-1].replace("'","").replace(" ",""), message = a[0][2].replace("%","%25"), user = str(a[0][1])))
 					buttonView.add_item(item=item)
 					pingString += f"<@{a[0][0]}> \n`{str(a[1])[1:-1]}`\n"
 					lbDict[a[0][0]][0] += len(a[1])
@@ -242,7 +242,7 @@ class Scroll(commands.Cog):
 					buttonView = discord.ui.View()
 					pingString = ""
 					for a in sendList:
-						item = discord.ui.Button(style=discord.ButtonStyle.gray, label=str(a[0][1]), url="https://www.nationstates.net/page=compose_telegram?tgto={recipients}&message={message}".format(recipients = str(a[1])[1:-1].replace("'","").replace(" ",""), message = a[0][2].replace("%","%25")))
+						item = discord.ui.Button(style=discord.ButtonStyle.gray, label=str(a[0][1]), url="https://www.nationstates.net/page=compose_telegram?tgto={recipients}&message={message}&generated_by=scroll_discord_bot__by_devi__usedby_{user}".format(recipients = str(a[1])[1:-1].replace("'","").replace(" ",""), message = a[0][2].replace("%","%25"), user = str(a[0][1])))
 						buttonView.add_item(item=item)
 						pingString += f"<@{a[0][0]}> \n`{str(a[1])[1:-1]}`\n"
 						lbDict[a[0][0]][0] += len(a[1])
