@@ -303,7 +303,7 @@ class Scroll(commands.Cog):
 			else:
 				with open(agentPath[0], 'r') as f:
 					agent = str(f.readline())
-			headers = {"User-Agent": f"Scroll manual recruitment cog for Discord's RedBot (developer:valkynora@gmail.com; current instance run by: {agent})"}
+			headers = {"User-Agent": f"Scroll manual recruitment cog for Discord's RedBot (developer:devi / valkynora@gmail.com; current instance run by: {agent})"}
 		tempPath = await self.CheckPath(ctx, "tempDict.txt")
 		if queueProc == True:
 			#if background backlog population is *currently* in the middle of a ping, it'll tell the user to wait to avoid stuff fucking up (tm)
@@ -435,7 +435,7 @@ class Scroll(commands.Cog):
 			else:
 				with open(agentPath[0], 'r') as f:
 					agent = str(f.readline())
-			headers = {"User-Agent": f"Scroll manual recruitment cog for Discord's RedBot (developer:valkynora@gmail.com; current instance run by: {agent})"}
+			headers = {"User-Agent": f"Scroll manual recruitment cog for Discord's RedBot (developer:devi / valkynora@gmail.com; current instance run by: {agent})"}
 		if inSession == False:
 			#obviously do nothing if there's no active session in the first place
 			await ctx.send(f"{author.mention}:\nNo recruitment session is currently running.")
@@ -520,7 +520,7 @@ class Scroll(commands.Cog):
 				return
 			else:
 				with open(agentPath[0], 'r') as f:
-					headers = {"User-Agent": f"Scroll manual recruitment cog for Discord's RedBot (developer:valkynora@gmail.com; current instance run by: {str(f.readline())})"}
+					headers = {"User-Agent": f"Scroll manual recruitment cog for Discord's RedBot (developer:devi / valkynora@gmail.com; current instance run by: {str(f.readline())})"}
 		#we reset a bunch of variables, write leaderboards/backlog externally in case
 		#and yeet the tasks for active loop/ping // restarts the background one
 		stopTime = time.time()
@@ -755,7 +755,7 @@ class Scroll(commands.Cog):
 			else:
 				with open(agentPath[0], 'r') as f:
 					agent = str(f.readline())
-			headers = {"User-Agent": f"Scroll manual recruitment cog for Discord's RedBot (developer:valkynora@gmail.com; current instance run by: {agent})"}
+			headers = {"User-Agent": f"Scroll manual recruitment cog for Discord's RedBot (developer:devi / valkynora@gmail.com; current instance run by: {agent})"}
 		if isRunning == False and inSession == False:
 			#we check for backlog data, and create a blank setup if not available or unreadable
 			if queueDict == False:
@@ -1053,7 +1053,7 @@ class Scroll(commands.Cog):
 		agentPath = await self.CheckPath(ctx, "uagent.cfg")
 		with open(agentPath[0], 'w') as f:
 			f.write(agent)
-		headers = {"User-Agent": f"Scroll manual recruitment cog for Discord's RedBot (developer:valkynora@gmail.com; current instance run by: {agent})"}
+		headers = {"User-Agent": f"Scroll manual recruitment cog for Discord's RedBot (developer: devi / valkynora@gmail.com; current instance run by: {agent})"}
 		await ctx.send(f"User-Agent has been set to {agent}.")
 		
 	@commands.command()
@@ -1132,7 +1132,7 @@ class Scroll(commands.Cog):
 			else:
 				with open(agentPath[0], 'r') as f:
 					agent = str(f.readline())
-			headers = {"User-Agent": f"Scroll manual recruitment cog for Discord's RedBot (developer:valkynora@gmail.com; current instance run by: {agent})"}
+			headers = {"User-Agent": f"Scroll manual recruitment cog for Discord's RedBot (developer: devi / valkynora@gmail.com; current instance run by: {agent})"}
 		await asyncio.sleep(1)
 		#as always we have an enforced delay before doing a call :))
 		queuereq = requests.get("https://www.nationstates.net/cgi-bin/api.cgi?q=tgqueue", headers = headers)
