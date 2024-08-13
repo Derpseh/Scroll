@@ -1091,6 +1091,7 @@ class Scroll(commands.Cog):
 	async def regionboards(self, ctx, *, region: str):
 		"""Displays the recruitment leaderboards for a specific region."""
 		global lbRegDict
+		region = region.lower()
 		lbRegPath = await self.CheckPath(ctx, "regionboards.txt")
 		#we've all seen this a million times :')
 		if lbRegDict == {}:
