@@ -217,7 +217,7 @@ class Scroll(commands.Cog):
 				buttonView = discord.ui.View()
 				pingString = ""
 				for a in sendList:
-					item = discord.ui.Button(style=discord.ButtonStyle.gray, label=str(a[0][1]), url="https://www.nationstates.net/page=compose_telegram?tgto={recipients}&message={message}&generated_by=scroll_discord_bot__by_devi__instance_run_by_{user}".format(recipients = str(a[1])[1:-1].replace("'","").replace(" ",""), message = a[0][2].replace("%","%25"), user = headers["User-Agent"].split(":")[-1][1:-1].replace(" ","_"))
+					item = discord.ui.Button(style=discord.ButtonStyle.gray, label=str(a[0][1]), url="https://www.nationstates.net/page=compose_telegram?tgto={recipients}&message={message}&generated_by=scroll_discord_bot__by_devi__instance_run_by_{user}".format(recipients = str(a[1])[1:-1].replace("'","").replace(" ",""), message = a[0][2].replace("%","%25"), user = headers["User-Agent"].split(":")[-1][1:-1].replace(" ","_")))
 					buttonView.add_item(item=item)
 					pingString += f"<@{a[0][0]}> \n`{str(a[1])[1:-1]}`\n"
 					lbDict[a[0][0]][0] += len(a[1])
