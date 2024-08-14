@@ -77,6 +77,7 @@ class Scroll(commands.Cog):
 		global queueDict
 		global delayTime
 		global lbRegDict
+		global headers
 		#the dict of active recruiters and backlog are both keyed by the region that's being recruited/backlogged for for convenience
 		#here we're just seeing if there's enough for a full bucket, spitting it out if so, and sending a boilerplate if not
 		for key in recDict:
@@ -85,7 +86,7 @@ class Scroll(commands.Cog):
 				for a in queueDict[key]:
 					del a[-8:]
 				buttonView = discord.ui.View()
-				item = discord.ui.Button(style=discord.ButtonStyle.gray, label=str(recDict[key][0][1]), url="https://www.nationstates.net/page=compose_telegram?tgto={recipients}&message={message}&generated_by=scroll_discord_bot__by_devi__usedby_{user}".format(recipients = str(natList)[1:-1].replace("'","").replace(" ",""), message = recDict[key][0][2].replace("%","%25"), user = recDict[key][0][1].replace(' ','_')))
+				item = discord.ui.Button(style=discord.ButtonStyle.gray, label=str(recDict[key][0][1]), url="https://www.nationstates.net/page=compose_telegram?tgto={recipients}&message={message}&generated_by=scroll_discord_bot__by_devi__instance_run_by_{user}".format(recipients = str(natList)[1:-1].replace("'","").replace(" ",""), message = recDict[key][0][2].replace("%","%25"), user = headers["User-Agent"].split(":")[-1][1:-1].replace(" ","_")))
 				buttonView.add_item(item=item)
 				await ctx.send(f"A new batch of nations has been founded; please follow the provided button and press \"Send\".\n\n__**TARGETS:**__\n<@{recDict[key][0][0]}>\n`{str(natList)[1:-1]}`", view = buttonView)
 				queuePath = await self.CheckPath(ctx, "queueDict.txt")
@@ -216,7 +217,7 @@ class Scroll(commands.Cog):
 				buttonView = discord.ui.View()
 				pingString = ""
 				for a in sendList:
-					item = discord.ui.Button(style=discord.ButtonStyle.gray, label=str(a[0][1]), url="https://www.nationstates.net/page=compose_telegram?tgto={recipients}&message={message}&generated_by=scroll_discord_bot__by_devi__usedby_{user}".format(recipients = str(a[1])[1:-1].replace("'","").replace(" ",""), message = a[0][2].replace("%","%25"), user = str(a[0][1]).replace(' ','_')))
+					item = discord.ui.Button(style=discord.ButtonStyle.gray, label=str(a[0][1]), url="https://www.nationstates.net/page=compose_telegram?tgto={recipients}&message={message}&generated_by=scroll_discord_bot__by_devi__instance_run_by_{user}".format(recipients = str(a[1])[1:-1].replace("'","").replace(" ",""), message = a[0][2].replace("%","%25"), user = headers["User-Agent"].split(":")[-1][1:-1].replace(" ","_"))
 					buttonView.add_item(item=item)
 					pingString += f"<@{a[0][0]}> \n`{str(a[1])[1:-1]}`\n"
 					lbDict[a[0][0]][0] += len(a[1])
@@ -242,7 +243,7 @@ class Scroll(commands.Cog):
 					buttonView = discord.ui.View()
 					pingString = ""
 					for a in sendList:
-						item = discord.ui.Button(style=discord.ButtonStyle.gray, label=str(a[0][1]), url="https://www.nationstates.net/page=compose_telegram?tgto={recipients}&message={message}&generated_by=scroll_discord_bot__by_devi__usedby_{user}".format(recipients = str(a[1])[1:-1].replace("'","").replace(" ",""), message = a[0][2].replace("%","%25"), user = str(a[0][1]).replace(' ','_')))
+						item = discord.ui.Button(style=discord.ButtonStyle.gray, label=str(a[0][1]), url="https://www.nationstates.net/page=compose_telegram?tgto={recipients}&message={message}&generated_by=scroll_discord_bot__by_devi____instance_run_by_{user}".format(recipients = str(a[1])[1:-1].replace("'","").replace(" ",""), message = a[0][2].replace("%","%25"), user = headers["User-Agent"].split(":")[-1][1:-1].replace(" ","_")))
 						buttonView.add_item(item=item)
 						pingString += f"<@{a[0][0]}> \n`{str(a[1])[1:-1]}`\n"
 						lbDict[a[0][0]][0] += len(a[1])
@@ -376,8 +377,8 @@ class Scroll(commands.Cog):
 						await ctx.send(f"{ctx.author.id}:\nERROR: Regional Leaderboard data is corrupted; deleting the file.")
 						os.remove(lbRegPath[0])
 			print(lbRegDict)
-			#if not(tempRegion in lbRegDict):
-				#lbRegDict
+			if not(tempRegion in lbRegDict):
+				lbRegDict[tempRegion] = {}
 			if not(str(author.id) in lbRegDict[tempRegion]):
 				lbRegDict[tempRegion][str(author.id)] = [0, str(author.display_name)]
 			#we yeet the tasks for background population at the start of a session, and restart them after
